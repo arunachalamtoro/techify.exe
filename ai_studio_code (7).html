@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>techify.exe // Web Design & Software Development</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@1&display=swap">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+
+    <style>
+        :root {
+            --accent: #22C55E;
+            --blue: #3B82F6;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist', sans-serif;
+            background-color: #F0F0F0;
+            background-image: linear-gradient(#DEDEDE 1px, transparent 1px), linear-gradient(90deg, #DEDEDE 1px, transparent 1px);
+            background-size: 40px 40px;
+            color: #1A1A1A;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .serif-italic {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+        }
+
+        /* Graph overlay for sections */
+        .bg-graph {
+            background-image: linear-gradient(#DEDEDE 1px, transparent 1px), linear-gradient(90deg, #DEDEDE 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Glass panel */
+        .glass {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+        }
+
+        /* Marquee Animation */
+        @keyframes marquee {
+            0% {
+                transform: translateX(0%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .animate-marquee {
+            animation: marquee 28s linear infinite;
+        }
+
+        /* Smooth Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Stagger Animations */
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(36px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-anim {
+            opacity: 0;
+            animation: fadeSlideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .d1 {
+            animation-delay: 0.05s;
+        }
+
+        .d2 {
+            animation-delay: 0.2s;
+        }
+
+        .d3 {
+            animation-delay: 0.38s;
+        }
+
+        .d4 {
+            animation-delay: 0.55s;
+        }
+
+        /* Card Style */
+        .card-editorial {
+            background: rgba(255, 255, 255, 0.38);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+
+        /* Section divider lines */
+        .divider-line {
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        /* FAQ Accordion */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+
+        .faq-item.active .faq-content {
+            max-height: 220px;
+            padding-top: 14px;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        /* Mobile: hide scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        /* ── Mobile Responsiveness ── */
+        @media (max-width: 640px) {
+            /* Marquee: smaller icons on phones */
+            .animate-marquee i {
+                font-size: 2rem;
+            }
+
+            /* Main grid spacing */
+            main {
+                padding-top: 5rem;
+                padding-bottom: 5rem;
+                gap: 3rem;
+            }
+
+            /* About photo: rein in the floating name badge */
+            #about .relative .absolute {
+                right: -8px;
+                bottom: -10px;
+                padding: 10px 12px;
+            }
+
+            /* Results stats: 2-col on mobile is fine, just reduce spacing */
+            #results .grid-cols-2 {
+                gap: 1rem;
+            }
+
+            /* Results chart panel */
+            #results .glass {
+                padding: 1rem;
+            }
+
+            /* Results heading + text col stack */
+            #results .md\:col-span-5 h3 {
+                font-size: 1.4rem;
+            }
+
+            /* CTA button on mobile full-width */
+            #about .flex-wrap span {
+                font-size: 0.65rem;
+                padding: 6px 12px;
+            }
+
+            /* Section headings: consistent mobile size */
+            .card-editorial h2.text-4xl {
+                font-size: 2.25rem;
+            }
+
+            /* FAQ question text */
+            .faq-item span {
+                font-size: 0.875rem;
+            }
+
+            /* Pricing price number */
+            .card-editorial .text-4xl.font-\[900\] {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header / Nav -->
+    <div class="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-5xl z-50">
+        <nav
+            class="glass shadow-[0_4px_24px_rgba(0,0,0,0.07)] rounded-full px-5 py-3 md:py-3.5 flex justify-between items-center transition-all">
+            <div class="text-lg md:text-2xl font-bold italic serif-italic">techify.exe</div>
+            <div class="hidden md:flex gap-8 text-[12px] font-bold uppercase tracking-widest">
+                <a href="#work" class="hover:text-[#22C55E] transition-colors">Work</a>
+                <a href="#pricing" class="hover:text-[#22C55E] transition-colors">Pricing</a>
+                <a href="#results" class="hover:text-[#22C55E] transition-colors">Results</a>
+                <a href="#about" class="hover:text-[#22C55E] transition-colors">About</a>
+            </div>
+            <button
+                onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSd-eGpt0gBoMSz7d15F8bA0J9RLGTeVOsb1855tXa71u7CswQ/viewform?usp=publish-editor', '_blank')"
+                class="bg-black text-white px-4 md:px-5 py-2 rounded-full font-bold text-[9px] md:text-[11px] tracking-wider hover:bg-[#22C55E] shadow-md transition-all whitespace-nowrap">
+                BOOK A CALL
+            </button>
+        </nav>
+    </div>
+
+    <!-- Hero Section — graph bg shows through, no white fill -->
+    <section
+        class="min-h-screen flex flex-col justify-center items-center text-center px-4 md:px-6 pt-32 pb-20 md:pt-24 md:pb-28 relative overflow-hidden w-full">
+        <!-- soft emerald glow -->
+        <div
+            class="absolute top-16 left-1/2 -translate-x-1/2 w-[80vw] max-w-[560px] h-[380px] bg-emerald-200/40 blur-[110px] rounded-full pointer-events-none z-0">
+        </div>
+
+        <div class="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center gap-5 md:gap-7">
+            <span
+                class="hero-anim d1 inline-block text-[9px] md:text-[11px] font-black tracking-[0.35em] uppercase text-gray-500">Web
+                Design &amp; Software Development</span>
+
+            <h1
+                class="hero-anim d2 text-[clamp(38px,10vw,118px)] font-[500] tracking-tighter leading-[0.88] text-black w-full">
+                We build websites that<br>
+                <span
+                    class="serif-italic font-normal text-emerald-500 underline decoration-green/10 underline-offset-[6px]">grow
+                    your business.</span>
+            </h1>
+
+            <p class="hero-anim d3 text-sm md:text-lg text-gray-600 max-w-xl font-medium leading-relaxed">
+                Premium web design, Next.js development &amp; SEO. Stunning, high-performing websites that scale your
+                brand.
+            </p>
+
+            <div class="hero-anim d4 flex flex-col sm:flex-row gap-3 w-full sm:w-auto justify-center pt-2">
+                <button
+                    onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSd-eGpt0gBoMSz7d15F8bA0J9RLGTeVOsb1855tXa71u7CswQ/viewform?usp=publish-editor', '_blank')"
+                    class="w-full sm:w-auto bg-black text-white px-7 md:px-10 py-3.5 md:py-4 rounded-full font-black text-sm flex items-center justify-center gap-2 hover:scale-105 transition-transform shadow-2xl">
+                    ✦ BOOK A CALL ↗
+                </button>
+                <button
+                    class="w-full sm:w-auto glass text-black px-7 md:px-10 py-3.5 md:py-4 rounded-full font-black text-sm hover:bg-white/60 transition-all">
+                    VIEW PROJECTS
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programming Languages Marquee -->
+    <div class="w-full bg-black py-7 overflow-hidden flex whitespace-nowrap relative z-10">
+        <div class="flex animate-marquee text-white text-4xl md:text-5xl items-center gap-12 md:gap-16 px-8">
+            <i class="devicon-javascript-plain"></i>
+            <i class="devicon-typescript-plain"></i>
+            <i class="devicon-python-plain"></i>
+            <i class="devicon-java-plain"></i>
+            <i class="devicon-cplusplus-plain"></i>
+            <i class="devicon-react-original"></i>
+            <i class="devicon-nextjs-plain"></i>
+            <i class="devicon-nodejs-plain"></i>
+            <i class="devicon-tailwindcss-original"></i>
+            <i class="devicon-postgresql-plain"></i>
+            <i class="devicon-mongodb-plain"></i>
+            <i class="devicon-docker-plain"></i>
+            <i class="devicon-git-plain"></i>
+            <i class="devicon-figma-plain"></i>
+        </div>
+        <div class="flex animate-marquee text-white text-4xl md:text-5xl items-center gap-12 md:gap-16 px-8">
+            <i class="devicon-javascript-plain"></i>
+            <i class="devicon-typescript-plain"></i>
+            <i class="devicon-python-plain"></i>
+            <i class="devicon-java-plain"></i>
+            <i class="devicon-cplusplus-plain"></i>
+            <i class="devicon-react-original"></i>
+            <i class="devicon-nextjs-plain"></i>
+            <i class="devicon-nodejs-plain"></i>
+            <i class="devicon-tailwindcss-original"></i>
+            <i class="devicon-postgresql-plain"></i>
+            <i class="devicon-mongodb-plain"></i>
+            <i class="devicon-docker-plain"></i>
+            <i class="devicon-git-plain"></i>
+            <i class="devicon-figma-plain"></i>
+        </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-7xl mx-auto px-4 md:px-6 py-20 space-y-20 w-full overflow-hidden">
+
+        <!-- Projects / Work -->
+        <section id="work" class="card-editorial p-6 md:p-12 reveal">
+            <div
+                class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b divider-line pb-8 mb-8 md:pb-10 md:mb-10 gap-3">
+                <div>
+                    <h2 class="text-4xl md:text-7xl font-[900] tracking-tighter">Work.</h2>
+                    <p class="serif-italic text-lg md:text-2xl text-gray-400">Hand-picked digital solutions.</p>
+                </div>
+                <p class="text-xs md:text-sm text-gray-500 md:max-w-[200px] md:text-right">Selected work. From local
+                    businesses to international platforms.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-6 md:gap-10">
+                <div class="group cursor-pointer">
+                    <div
+                        class="aspect-[16/10] glass rounded-2xl mb-4 flex items-center justify-center relative overflow-hidden">
+                        <span class="text-gray-400 text-sm font-bold">Project Preview</span>
+                        <div
+                            class="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="text-white font-bold tracking-widest text-sm">VIEW CASE STUDY</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold">Project Title</h3>
+                    <p class="text-gray-500 text-sm">Corporate web application &amp; SEO strategy</p>
+                </div>
+                <div class="group cursor-pointer">
+                    <div
+                        class="aspect-[16/10] glass rounded-2xl mb-4 flex items-center justify-center relative overflow-hidden">
+                        <span class="text-gray-400 text-sm font-bold">Project Preview</span>
+                        <div
+                            class="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="text-white font-bold tracking-widest text-sm">VIEW CASE STUDY</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold">Project Title</h3>
+                    <p class="text-gray-500 text-sm">E-commerce experience for modern brands</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="card-editorial p-6 md:p-12 reveal">
+            <div
+                class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b divider-line pb-8 mb-8 md:pb-10 md:mb-10 gap-3">
+                <div>
+                    <h2 class="text-4xl md:text-7xl font-[900] tracking-tighter">Pricing.</h2>
+                    <p class="serif-italic text-lg md:text-2xl text-gray-400">Transparent costs, high quality.</p>
+                </div>
+                <p class="text-xs md:text-sm text-gray-500 md:max-w-[240px] md:text-right">Fair pricing for high-end
+                    bespoke development.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-5 md:gap-8">
+                <!-- Basic -->
+                <div
+                    class="p-6 md:p-8 rounded-3xl bg-emerald-50/60 backdrop-blur-xl border border-emerald-100/60 hover:shadow-xl transition-all">
+                    <span class="text-[9px] font-black tracking-widest text-gray-400 uppercase">Single Payment</span>
+                    <h3 class="text-2xl md:text-4xl font-light mt-2 mb-5">landing page</h3>
+                    <div class="text-4xl md:text-6xl font-[900] text-black mb-5">&#8377;2,999</div>
+                    <ul class="space-y-3 mb-8 text-sm font-medium">
+                        <li class="flex items-center gap-3"><i data-lucide="check"
+                                class="text-emerald-500 w-4 h-4 shrink-0"></i>1 Page Setup</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check"
+                                class="text-emerald-500 w-4 h-4 shrink-0"></i>Mobile Optimized</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check"
+                                class="text-emerald-500 w-4 h-4 shrink-0"></i>Contact Form Integration</li>
+                    </ul>
+                    <button
+                        onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSd-eGpt0gBoMSz7d15F8bA0J9RLGTeVOsb1855tXa71u7CswQ/viewform?usp=publish-editor', '_blank')"
+                        class="w-full bg-emerald-500 text-white py-3.5 rounded-2xl font-black hover:bg-black transition-colors text-sm">GET
+                        STARTED &#8594;</button>
+                </div>
+                <!-- Standard -->
+                <div
+                    class="p-6 md:p-8 rounded-3xl bg-blue-50/60 backdrop-blur-xl border border-blue-100/60 relative overflow-hidden hover:shadow-xl transition-all">
+                    <div
+                        class="absolute top-4 right-4 bg-[#3B82F6] text-white text-[9px] font-black px-3 py-1 rounded-full">
+                        POPULAR</div>
+                    <span class="text-[9px] font-black tracking-widest text-gray-400 uppercase">Full Experience</span>
+                    <h3 class="text-2xl md:text-4xl font-bold mt-2 mb-5">standard</h3>
+                    <div class="text-4xl md:text-6xl font-[900] text-black mb-5">&#8377;5,999</div>
+                    <ul class="space-y-3 mb-8 text-sm font-medium">
+                        <li class="flex items-center gap-3"><i data-lucide="check"
+                                class="text-[#3B82F6] w-4 h-4 shrink-0"></i>3–5 Custom Pages</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check"
+                                class="text-[#3B82F6] w-4 h-4 shrink-0"></i>CMS / Admin Panel</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check"
+                                class="text-[#3B82F6] w-4 h-4 shrink-0"></i>Advanced SEO Setup</li>
+                    </ul>
+                    <button
+                        onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSd-eGpt0gBoMSz7d15F8bA0J9RLGTeVOsb1855tXa71u7CswQ/viewform?usp=publish-editor', '_blank')"
+                        class="w-full bg-[#3B82F6] text-white py-3.5 rounded-2xl font-black hover:bg-black transition-colors text-sm">GET
+                        STARTED &#8594;</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results / Graph Section -->
+        <section id="results" class="card-editorial p-6 md:p-12 reveal overflow-hidden relative">
+            <div class="absolute inset-0 bg-graph opacity-30 pointer-events-none"></div>
+            <div
+                class="flex flex-col md:flex-row justify-between items-end border-b divider-line pb-8 mb-8 md:pb-10 md:mb-10 gap-4">
+                <h2 class="text-4xl md:text-7xl font-[900] tracking-tighter">Results.</h2>
+                <p class="text-sm text-gray-500 max-w-[240px] md:text-right">Optimization that translates to real-world
+                    revenue.</p>
+            </div>
+
+            <div class="grid md:grid-cols-12 gap-6 md:gap-12 items-center">
+                <div class="md:col-span-7 glass p-6 md:p-8 rounded-3xl relative">
+                    <h4 class="font-bold text-[10px] uppercase tracking-widest text-gray-400 mb-6">Performance Metrics
+                    </h4>
+                    <svg viewBox="0 0 400 150" class="w-full h-auto">
+                        <path d="M0 130 Q 100 120 200 60 T 400 10" stroke="#22C55E" stroke-width="4" fill="none"
+                            stroke-linecap="round" />
+                        <circle cx="200" cy="60" r="6" fill="#22C55E" />
+                        <circle cx="400" cy="10" r="6" fill="#22C55E" />
+                        <text x="210" y="65" font-size="11" font-weight="bold" fill="#333">SEO Launch</text>
+                        <text x="310" y="25" font-size="11" font-weight="bold" fill="#22C55E">99% Score</text>
+                    </svg>
+                </div>
+                <div class="md:col-span-5 space-y-6">
+                    <h3 class="text-4xl font-extrabold tracking-tight">Websites built for real results.</h3>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <span class="block font-black text-black">100%</span>
+                            <span class="text-xs text-gray-400 uppercase font-bold">Responsive</span>
+                        </div>
+                        <div>
+                            <span class="block font-black text-black">0.8s</span>
+                            <span class="text-xs text-gray-400 uppercase font-bold">Load Time</span>
+                        </div>
+                        <div>
+                            <span class="block font-black text-black">A+</span>
+                            <span class="text-xs text-gray-400 uppercase font-bold">Security</span>
+                        </div>
+                        <div>
+                            <span class="block font-black text-black">99%</span>
+                            <span class="text-xs text-gray-400 uppercase font-bold">Uptime</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="card-editorial p-6 md:p-12 reveal">
+            <div
+                class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b divider-line pb-8 mb-8 md:pb-10 md:mb-10 gap-3">
+                <h2 class="text-4xl md:text-7xl font-[900] tracking-tighter">FAQ.</h2>
+                <p class="serif-italic text-xl md:text-2xl text-gray-400">Answers to your curiosities.</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto space-y-3">
+                <div class="faq-item p-5 md:p-6 rounded-2xl cursor-pointer glass"
+                    onclick="this.classList.toggle('active')">
+                    <div class="flex justify-between items-center font-bold text-sm md:text-base gap-3">
+                        <span>Why techify.exe over a large agency?</span>
+                        <i data-lucide="chevron-down" class="faq-icon shrink-0 w-4 h-4"></i>
+                    </div>
+                    <div class="faq-content text-sm text-gray-500 leading-relaxed">
+                        I work solo — direct communication, faster delivery, no middlemen. Every project gets my full,
+                        undivided attention.
+                    </div>
+                </div>
+                <div class="faq-item p-5 md:p-6 rounded-2xl cursor-pointer glass"
+                    onclick="this.classList.toggle('active')">
+                    <div class="flex justify-between items-center font-bold text-sm md:text-base gap-3">
+                        <span>How long does a website take?</span>
+                        <i data-lucide="chevron-down" class="faq-icon shrink-0 w-4 h-4"></i>
+                    </div>
+                    <div class="faq-content text-sm text-gray-500 leading-relaxed">
+                        A standard landing page takes 3–5 days. Complex multi-page sites typically take 2 weeks from
+                        start to launch.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="card-editorial p-6 md:p-12 reveal">
+            <div class="flex flex-col md:grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+                <div class="relative w-full max-w-sm mx-auto md:max-w-none">
+                    <div
+                        class="aspect-square glass rounded-3xl overflow-hidden flex items-center justify-center font-black text-gray-400 text-sm">
+                        Portrait Photo
+                    </div>
+                    <div
+                        class="absolute -bottom-5 -right-3 md:-bottom-7 md:-right-7 p-3 md:p-5 bg-black rounded-2xl text-white shadow-xl">
+                        <span class="block text-base md:text-xl font-black italic serif-italic">Arunachalam</span>
+                        <span class="text-[9px] md:text-[10px] tracking-widest text-gray-400 uppercase">Founder,
+                            techify.exe</span>
+                    </div>
+                </div>
+                <div class="space-y-5 md:space-y-7 mt-8 md:mt-0">
+                    <h2 class="text-3xl md:text-6xl font-[900] tracking-tighter">One mind,<br>clear vision.</h2>
+                    <p class="text-gray-500 leading-relaxed text-sm md:text-base">
+                        I'm a 19-year-old developer from India focused on the intersection of design and technology. I
+                        believe your website shouldn't just look good — it should be your hardest working employee.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="glass px-4 py-2 rounded-full text-xs font-bold uppercase">Web Development</span>
+                        <span class="glass px-4 py-2 rounded-full text-xs font-bold uppercase">UI/UX Design</span>
+                        <span class="glass px-4 py-2 rounded-full text-xs font-bold uppercase">Software
+                            Engineering</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Final Dark CTA -->
+    <section class="bg-black text-white py-20 md:py-28 px-4 md:px-6 text-center overflow-hidden">
+        <h2 class="text-[clamp(30px,8vw,88px)] font-[900] tracking-tighter leading-none mb-7 md:mb-10">
+            Let's build the <span class="serif-italic font-normal text-emerald-500">future</span> together.
+        </h2>
+        <button
+            onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSd-eGpt0gBoMSz7d15F8bA0J9RLGTeVOsb1855tXa71u7CswQ/viewform?usp=publish-editor', '_blank')"
+            class="w-full sm:w-auto bg-white text-black px-8 py-4 md:px-12 md:py-5 rounded-full font-black text-sm md:text-base hover:bg-emerald-500 hover:text-white transition-all shadow-[0_16px_40px_rgba(34,197,94,0.3)]">
+            BOOK YOUR CALL NOW &#8599;
+        </button>
+        <p class="mt-8 text-gray-500 uppercase tracking-widest text-[10px] font-bold italic serif-italic">techify.exe //
+            established 2025</p>
+    </section>
+
+    <!-- Footer -->
+    <footer
+        class="py-8 px-4 md:px-6 border-t border-white/20 text-center text-[10px] font-bold tracking-widest text-gray-500 uppercase glass">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 flex-wrap">
+            <div>&#169; 2025 techify.exe — All Rights Reserved.</div>
+            <div class="flex gap-5 justify-center">
+                <a href="#" class="hover:text-emerald-600 transition-colors">Twitter</a>
+                <a href="#" class="hover:text-emerald-600 transition-colors">LinkedIn</a>
+                <a href="#" class="hover:text-emerald-600 transition-colors">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Reveal Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+
+</html>
